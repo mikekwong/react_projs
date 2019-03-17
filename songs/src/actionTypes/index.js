@@ -1,0 +1,3 @@
+const SONG_SELECTED = 'SONG_SELECTED'
+
+export { SONG_SELECTED }
