@@ -1,9 +1,9 @@
-import { FETCH_POSTS } from '../actionTypes'
+import { FETCH_USER } from '../actionTypes'
 
 export default (state = [], action) => {
   switch (action.type) {
-    case FETCH_POSTS:
-      return action.payload
+    case FETCH_USER:
+      return [...state, action.payload]
     default:
       return state
   }

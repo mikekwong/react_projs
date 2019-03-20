@@ -1,1 +1,4 @@
-export const FETCH_POSTS = 'FETCH_POSTS'
+const FETCH_POSTS = 'FETCH_POSTS'
+const FETCH_USER = 'FETCH_USER'
+
+export { FETCH_POSTS, FETCH_USER }
