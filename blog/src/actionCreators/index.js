@@ -3,16 +3,25 @@ import { FETCH_POSTS, FETCH_USER } from '../actionTypes'
 
 import jsonPlaceholder from '../apis/jsonPlaceholder'
 
+// refactor to help with overfetching w/o memoization
 // redux thunk has a second argument: getState function is available in redux store to give us access to all data inside redux
 const fetchPostsAndUsers = () => async (dispatch, getState) => {
   try {
     // dispatch the results of calling the action creator
     // this await will make sure the fetchPosts API promise resolves first assigns it to response
     await dispatch(fetchPosts())
-    // get array of unique user id by passing in second argument
-    const userIds = _.uniq(_.map(getState().posts, 'userId'))
-    // no await needed as we don't care for each user to be fetched
-    userIds.forEach(id => dispatch(fetchUser(id)))
+    // // get array of unique user id by passing in second argument
+    // const userIds = _.uniq(_.map(getState().posts, 'userId'))
+    // // no await needed as we don't care for each user to be fetched
+    // userIds.forEach(id => dispatch(fetchUser(id)))
+
+    // lodash method to chain above for brevity (refactor)
+    _.chain(getState().posts)
+      .map('userId')
+      .uniq()
+      .forEach(id => dispatch(fetchUser(id)))
+      // value will execute the chain methods
+      .value()
   } catch (error) {
     console.error(error)
   }
